@@ -1,0 +1,245 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+		  <TargetFramework>netstandard2.0</TargetFramework>
+		  <LangVersion>10.0</LangVersion>
+		  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Cat_sCradle</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="assetbundle\assetbundle.npcjak" />
+    <None Remove="assetbundle\npcjak.meta" />
+    <None Remove="ballin\ballpit.png" />
+    <None Remove="bitcheshouse\bitches_house.png" />
+    <None Remove="blob\fearTalk.png" />
+    <None Remove="blob\fearWalk.png" />
+    <None Remove="blob\levisTalk.png" />
+    <None Remove="blob\levisWalk.png" />
+    <None Remove="blob\sigisTalk.png" />
+    <None Remove="blob\sigisWalk.png" />
+    <None Remove="blue\BlueFace.png" />
+    <None Remove="blue\BlueFist.png" />
+    <None Remove="blue\BlueMask.png" />
+    <None Remove="blue\BlueWorld.png" />
+    <None Remove="bomb\hi1.png" />
+    <None Remove="bomb\hi2.png" />
+    <None Remove="bomb\hi3.png" />
+    <None Remove="bomb\hi4.png" />
+    <None Remove="bucket\BucketFace.png" />
+    <None Remove="bucket\BucketWorld.png" />
+    <None Remove="dumbass\FlipWorld.png" />
+    <None Remove="dumbass\HOOD_IRONY1.png" />
+    <None Remove="dumbass\HOOD_IRONY2.png" />
+    <None Remove="dumbass\HOOD_IRONY3.png" />
+    <None Remove="dumbass\HOOD_IRONY4.png" />
+    <None Remove="fatty\Lobothomas_Front.png" />
+    <None Remove="fatty\Lobothomas_Overworld.png" />
+    <None Remove="fatty\Squinto_Front.png" />
+    <None Remove="fatty\Squinto_Overworld.png" />
+    <None Remove="fatty\Uno_Down.png" />
+    <None Remove="fatty\Uno_Front.png" />
+    <None Remove="fatty\Uno_Overworld.png" />
+    <None Remove="feddy\fishdialogue.png" />
+    <None Remove="feddy\fishoverworld.png" />
+    <None Remove="fleshless\nofleshface.png" />
+    <None Remove="fleshless\nofleshworld.png" />
+    <None Remove="heart\HeartFace.png" />
+    <None Remove="heart\HeartWorld.png" />
+    <None Remove="hole\HoleGuy_overworld.png" />
+    <None Remove="hole\HoleGuy_portrait.png" />
+    <None Remove="ketchup\Conway.png" />
+    <None Remove="ketchup\Conworld.png" />
+    <None Remove="lost\lost.png" />
+    <None Remove="masks\MaskAngry.png" />
+    <None Remove="masks\MaskDust.png" />
+    <None Remove="masks\MaskFinger.png" />
+    <None Remove="masks\MaskFirstDissolve.png" />
+    <None Remove="masks\MaskHappy.png" />
+    <None Remove="masks\MaskSad.png" />
+    <None Remove="masks\MaskScream.png" />
+    <None Remove="masks\MaskSecondDissolve.png" />
+    <None Remove="masks\MaskWorld.png" />
+    <None Remove="meatbaby\empty.png" />
+    <None Remove="meatbaby\FlipBird.png" />
+    <None Remove="meatbaby\MeatBaby.png" />
+    <None Remove="meatbaby\Swag.png" />
+    <None Remove="minister\GiggleIcon.png" />
+    <None Remove="minister\Minister.png" />
+    <None Remove="MODDD.png" />
+    <None Remove="music\Computer.png" />
+    <None Remove="music\Off.png" />
+    <None Remove="music\Screen.png" />
+    <None Remove="music\Static.png" />
+    <None Remove="noidea\clueless_dialogue.png" />
+    <None Remove="noidea\clueless_sits.png" />
+    <None Remove="nothing\Mungcorpse.png" />
+    <None Remove="pisshit\FrontGuy_1.png" />
+    <None Remove="pisshit\FrontGuy_2.png" />
+    <None Remove="pisshit\itemguy.png" />
+    <None Remove="pisshit\MenuGuy_1.png" />
+    <None Remove="PPPLACEHOLDER\OverworldPlaceholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assetbundle\assetbundle.npcjak" />
+    <EmbeddedResource Include="assetbundle\npcjak.meta" />
+    <EmbeddedResource Include="heart\HeartFace.png" />
+    <EmbeddedResource Include="heart\HeartWorld.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ballin\ballpit.png" />
+    <EmbeddedResource Include="bitcheshouse\bitches_house.png" />
+    <EmbeddedResource Include="blob\fearTalk.png" />
+    <EmbeddedResource Include="blob\fearWalk.png" />
+    <EmbeddedResource Include="blob\levisTalk.png" />
+    <EmbeddedResource Include="blob\levisWalk.png" />
+    <EmbeddedResource Include="blob\sigisTalk.png" />
+    <EmbeddedResource Include="blob\sigisWalk.png" />
+    <EmbeddedResource Include="blue\BlueFace.png" />
+    <EmbeddedResource Include="blue\BlueFist.png" />
+    <EmbeddedResource Include="blue\BlueMask.png" />
+    <EmbeddedResource Include="blue\BlueWorld.png" />
+    <EmbeddedResource Include="bomb\hi1.png" />
+    <EmbeddedResource Include="bomb\hi2.png" />
+    <EmbeddedResource Include="bomb\hi3.png" />
+    <EmbeddedResource Include="bomb\hi4.png" />
+    <EmbeddedResource Include="bucket\BucketFace.png" />
+    <EmbeddedResource Include="bucket\BucketWorld.png" />
+    <EmbeddedResource Include="dumbass\FlipWorld.png" />
+    <EmbeddedResource Include="dumbass\HOOD_IRONY1.png" />
+    <EmbeddedResource Include="dumbass\HOOD_IRONY2.png" />
+    <EmbeddedResource Include="dumbass\HOOD_IRONY3.png" />
+    <EmbeddedResource Include="dumbass\HOOD_IRONY4.png" />
+    <EmbeddedResource Include="fatty\Lobothomas_Front.png" />
+    <EmbeddedResource Include="fatty\Lobothomas_Overworld.png" />
+    <EmbeddedResource Include="fatty\Squinto_Front.png" />
+    <EmbeddedResource Include="fatty\Squinto_Overworld.png" />
+    <EmbeddedResource Include="fatty\Uno_Down.png" />
+    <EmbeddedResource Include="fatty\Uno_Front.png" />
+    <EmbeddedResource Include="fatty\Uno_Overworld.png" />
+    <EmbeddedResource Include="feddy\fishdialogue.png" />
+    <EmbeddedResource Include="feddy\fishoverworld.png" />
+    <EmbeddedResource Include="fleshless\nofleshface.png" />
+    <EmbeddedResource Include="fleshless\nofleshworld.png" />
+    <EmbeddedResource Include="hole\HoleGuy_overworld.png" />
+    <EmbeddedResource Include="hole\HoleGuy_portrait.png" />
+    <EmbeddedResource Include="ketchup\Conway.png" />
+    <EmbeddedResource Include="ketchup\Conworld.png" />
+    <EmbeddedResource Include="lost\lost.png" />
+    <EmbeddedResource Include="masks\MaskAngry.png" />
+    <EmbeddedResource Include="masks\MaskDust.png" />
+    <EmbeddedResource Include="masks\MaskFinger.png" />
+    <EmbeddedResource Include="masks\MaskFirstDissolve.png" />
+    <EmbeddedResource Include="masks\MaskHappy.png" />
+    <EmbeddedResource Include="masks\MaskSad.png" />
+    <EmbeddedResource Include="masks\MaskScream.png" />
+    <EmbeddedResource Include="masks\MaskSecondDissolve.png" />
+    <EmbeddedResource Include="masks\MaskWorld.png" />
+    <EmbeddedResource Include="meatbaby\empty.png" />
+    <EmbeddedResource Include="meatbaby\FlipBird.png" />
+    <EmbeddedResource Include="meatbaby\MeatBaby.png" />
+    <EmbeddedResource Include="meatbaby\Swag.png" />
+    <EmbeddedResource Include="minister\GiggleIcon.png" />
+    <EmbeddedResource Include="minister\Minister.png" />
+    <EmbeddedResource Include="MODDD.png" />
+    <EmbeddedResource Include="music\Computer.png" />
+    <EmbeddedResource Include="music\Off.png" />
+    <EmbeddedResource Include="music\Screen.png" />
+    <EmbeddedResource Include="music\Static.png" />
+    <EmbeddedResource Include="noidea\clueless_dialogue.png" />
+    <EmbeddedResource Include="noidea\clueless_sits.png" />
+    <EmbeddedResource Include="nothing\Mungcorpse.png" />
+    <EmbeddedResource Include="pisshit\FrontGuy_1.png" />
+    <EmbeddedResource Include="pisshit\FrontGuy_2.png" />
+    <EmbeddedResource Include="pisshit\itemguy.png" />
+    <EmbeddedResource Include="pisshit\MenuGuy_1.png" />
+    <EmbeddedResource Include="PPPLACEHOLDER\OverworldPlaceholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Album">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Album.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BrutalAPI">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\BrutalAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="FMODUnity">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\FMODUnity.dll</HintPath>
+    </Reference>
+    <Reference Include="FMODUnityResonance">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\FMODUnityResonance.dll</HintPath>
+    </Reference>
+    <Reference Include="Marosi.SerializableCollections">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Marosi.SerializableCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="Marosi.Utility">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Marosi.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\YarnSpinner.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner.Compiler">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\YarnSpinner.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner.Unity">
+      <HintPath>..\..\the folder for references VS\BO Modding Generic Dependencies\YarnSpinner.Unity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
