@@ -1,131 +1,215 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Cat_sCradle.TestNPC
-// Assembly: "Cat'sCradle", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 0655AEEE-5A60-4F93-BDB6-92433D76888B
-// Assembly location: C:\Users\windows\Downloads\Cat'sCradle\Cat'sCradle.dll
-
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tools;
+using System.Text;
 using UnityEngine;
+using BrutalAPI;
+using static BrutalAPI.BrutalAPI;
+using Tools;
+using Yarn.Compiler;
+using Yarn;
+using System.IO;
+using Yarn.Unity;
 
-#nullable disable
 namespace Cat_sCradle
 {
-  public static class TestNPC
-  {
-    public static bool TestCardAdded;
-
-    public static Sprite World
+    public static class TestNPC
     {
-      get
-      {
-        return ResourceLoader.LoadSprite("OverworldPlaceholder.png", 32, new Vector2?(new Vector2(0.5f, 0.0f)));
-      }
+        public static Sprite World => ResourceLoader.LoadSprite("OverworldPlaceholder.png", 32, new Vector2(0.5f, 0));
+        public static Sprite WNPivot => ResourceLoader.LoadSprite("OverworldPlaceholder.png", 32);
+        public static Sprite Front => ResourceLoader.LoadSprite("PlaceholderFront.png", 32);
+        public static YarnProgram Script
+        {
+            get
+            {
+                YarnProgram y = Data.Assets.LoadAsset<YarnProgram>("assets/TestGuy/test.yarn");
+                return y;
+            }
+        }
+        public static Material SpriteMat
+        {
+            get
+            {
+                BasicEncounterSO jesus = LoadedAssetsHandler.GetBasicEncounter("PervertMessiah_Flavour");
+
+                NPCRoomHandler hJesus = LoadedAssetsHandler.GetRoomPrefab(CardType.Flavour, jesus.encounterRoom) as NPCRoomHandler;
+
+                BasicRoomItem hje = hJesus._npcSelectable as BasicRoomItem;
+
+                return hje._renderers[0].material;
+            }
+        }
+        public static bool TestCardAdded = false;
+        public static void Test(bool initial = true)
+        {
+            string roomName = "TestRoom";
+            string convoName = "TestConvo";
+            string encounterName = "TestEncounter";
+
+            BasicEncounterSO jesus = LoadedAssetsHandler.GetBasicEncounter("PervertMessiah_Flavour");
+
+            NPCRoomHandler hJesus = LoadedAssetsHandler.GetRoomPrefab(CardType.Flavour, jesus.encounterRoom) as NPCRoomHandler;
+            //if (hJesus != null) { Debug.Log(hJesus); } else Debug.Log("gay!");
+
+            //Transform newer = GameObject.Instantiate(hJesus.transform);
+
+            Transform je = hJesus.transform.GetChild(0);
+            //Debug.Log(je.gameObject);
+            //Debug.Log(je.gameObject.activeSelf);
+
+            //RunDataSO.PopulateRoomInstance()
+
+            NPCRoomHandler room = //UnityEngine.Object.Instantiate<NPCRoomHandler>(hJesus, hJesus.transform.parent);
+                Data.Assets.LoadAsset<GameObject>("assets/TestGuy/TestRoom.prefab").AddComponent<NPCRoomHandler>();
+            room._npcSelectable = room.transform.GetChild(0).gameObject.AddComponent<BasicRoomItem>();
+            room._npcSelectable._renderers = new SpriteRenderer[]
+            {
+                room._npcSelectable.transform.GetChild(0).GetComponent<SpriteRenderer>()
+            };
+            room._npcSelectable._renderers[0].material = SpriteMat;
+            /*
+            room.name = "TestGuy_Room";
+            room._npcSelectable = room.transform.GetChild(0).GetComponent<BasicRoomItem>();
+            Vector3 pos = room._npcSelectable.transform.localPosition;
+            pos.x += 2;
+            room._npcSelectable.transform.localPosition = pos;
+            room._npcSelectable._renderers[0].sprite = World;
+            room._npcSelectable._renderers[0].enabled = false;
+            Vector3 center = room._npcSelectable._detector.bounds.center;
+            center.y += 2;
+            Vector3 ext = room._npcSelectable._detector.bounds.extents;
+            room._npcSelectable._detector.bounds.center = center;
+            */
+            //room._entityData = new TalkingEntityContentData(convoName);
+            //room.GenerateAllSelectables();
+            //room.PrepareRoom();
+            //foreach (Component comp in room._npcSelectable.GetComponents<Component>())
+            //{
+            //Debug.Log(comp);
+            //}
+            //return;
+            //pull this from an assetbunldle
+            if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains(PathUtils.encounterRoomsResPath + roomName)) LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + roomName, room);
+            else LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + roomName] = room;
+            //if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains(roomName)) LoadedAssetsHandler.LoadedRoomPrefabs.Add(roomName, room);
+
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Test.Start";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+
+
+            ConditionEncounterSO ret = ScriptableObject.CreateInstance<ConditionEncounterSO>();
+            ret.questName = (QuestIDs)774992;
+            ret.questsCompletedNeeded = new QuestIDs[0];
+            ret.name = encounterName;
+            ret._dialogue = convoName;
+            ret.encounterRoom = roomName;
+            ret.signType = (SignType)774992;
+            ret.npcEntityIDs = new EntityIDs[] { (EntityIDs)774992 };
+            if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains(encounterName)) LoadedAssetsHandler.LoadedBasicEncounters.Add(encounterName, ret);
+            else LoadedAssetsHandler.LoadedBasicEncounters[encounterName] = ret;
+
+            //if (!TestCardAdded)
+            //    AddSignType((SignType)774992, WNPivot);
+
+            ZoneBGDataBaseSO orphE = LoadedAssetsHandler.GetZoneDB("ZoneDB_02") as ZoneBGDataBaseSO;
+            ZoneBGDataBaseSO orphH = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_02") as ZoneBGDataBaseSO;
+
+            CardTypeInfo card = new CardTypeInfo();
+            card._cardInfo = new CardInfo() { cardType = CardType.Flavour, pilePosition = PilePositionType.First };
+            card._minimumAmount = 0;
+
+            if (!orphE._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldEF = new List<string>(orphE._FlavourPool);
+                oldEF.Add(encounterName);
+                orphE._FlavourPool = oldEF.ToArray();
+
+                List<CardTypeInfo> oldEC = new List<CardTypeInfo>(orphE._deckInfo._possibleCards);
+                oldEC.Add(card);
+                orphE._deckInfo._possibleCards = oldEC.ToArray();
+            }
+
+            if (!orphH._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldHF = new List<string>(orphH._FlavourPool);
+                oldHF.Add(encounterName);
+                orphH._FlavourPool = oldHF.ToArray();
+                List<CardTypeInfo> oldHC = new List<CardTypeInfo>(orphH._deckInfo._possibleCards);
+                oldHC.Add(card);
+                orphH._deckInfo._possibleCards = oldHC.ToArray();
+            }
+            //TestCardAdded = true;
+            
+            SpeakerData test = ScriptableObject.CreateInstance<SpeakerData>();
+            test.speakerName = "TestGuy" + PathUtils.speakerDataSuffix;
+            test.name = "TestGuy" + PathUtils.speakerDataSuffix;
+
+            SpeakerBundle testBund = new SpeakerBundle();
+            testBund.dialogueSound = "event:/Characters/Player/Anton/CHR_PLR_Anton_Dx";
+            testBund.portrait = Front;
+
+            test._defaultBundle = testBund;
+            test.portraitLooksLeft = true;
+            test.portraitLooksCenter = false;
+
+            if (!LoadedAssetsHandler.LoadedSpeakers.Keys.Contains(test.speakerName)) LoadedAssetsHandler.LoadedSpeakers.Add(test.speakerName, test);
+            else LoadedAssetsHandler.LoadedSpeakers[test.speakerName] = test;
+
+            /*
+
+            Card c = new Card(77, 78, CardType.Flavour, PilePositionType.First, ret.signType, ret.encounterRoom);
+            BaseRoomHandler h = (c.RoomInstance = UnityEngine.Object.Instantiate(LoadedAssetsHandler.GetRoomPrefab(c.CardType, c.RoomPrefabName)));
+            Debug.Log("g");
+            //UnityEngine.Object.Instantiate(LoadedAssetsHandler.GetRoomPrefab(CardType.Flavour, "bb)"));
+
+            CardInfo finfo = new CardInfo();
+            Card fard = new Card(69, 79, finfo.cardType, PilePositionType.First, c.SignIconType, c.RoomPrefabName);
+            Debug.Log("fake card");
+            BaseRoomHandler bb = (fard.RoomInstance = UnityEngine.Object.Instantiate(LoadedAssetsHandler.GetRoomPrefab(fard.CardType, fard.RoomPrefabName)));
+            Debug.Log("fake room");
+            Debug.Log(bb);
+            */
+            return;
+            if (LoadedAssetsHandler.GetBasicEncounter(encounterName) != null) Debug.Log(LoadedAssetsHandler.GetBasicEncounter(encounterName));
+            else Debug.Log(encounterName + " is null");
+            if (LoadedAssetsHandler.GetRoomPrefab(CardType.Flavour, roomName) != null) Debug.Log(LoadedAssetsHandler.GetRoomPrefab(CardType.Flavour, roomName));
+            else Debug.Log(roomName + " is null");
+            if (LoadedAssetsHandler.GetDialogueData(convoName) != null) Debug.Log(LoadedAssetsHandler.GetDialogueData(convoName));
+            else Debug.Log(convoName + " is null");
+            if (LoadedAssetsHandler.GetSpeakerData(test.speakerName) != null) Debug.Log(LoadedAssetsHandler.GetSpeakerData(test.speakerName));
+            else Debug.Log(test.speakerName + " is null");
+        }
     }
 
-    public static Sprite WNPivot => ResourceLoader.LoadSprite("OverworldPlaceholder.png", 32);
-
-    public static Sprite Front => ResourceLoader.LoadSprite("PlaceholderFront.png", 32);
-
-    public static YarnProgram Script
+    public static class Filing
     {
-      get => Data.Assets.LoadAsset<YarnProgram>("assets/TestGuy/test.yarn");
-    }
+        public static string Path = Application.dataPath + "/StreamingAssets";
 
-    public static Material SpriteMat
-    {
-      get
-      {
-        return ((Renderer) ((BaseRoomItem) ((LoadedAssetsHandler.GetRoomPrefab((CardType) 300, LoadedAssetsHandler.GetBasicEncounter("PervertMessiah_Flavour").encounterRoom) as NPCRoomHandler)._npcSelectable as BasicRoomItem))._renderers[0]).material;
-      }
+        public static void CreateResourceFile(string resourceName, string path, string outputName, bool onlyIfNotExist = false)
+        {
+            byte[] resource = new byte[0] { };
+            try
+            {
+                resource = ResourceLoader.ResourceBinary(resourceName);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+                Debug.Log("THIS IS A RESOURCE LOADER ERROR, YOU LOADED THE RESOURCE WRONG 4HEAD");
+                Debug.Log(ex.StackTrace);
+            }
+            if (resource.Length > 0 && !(onlyIfNotExist && File.Exists(path + "/" + outputName)))
+            {
+                File.WriteAllBytes(path + "/" + outputName, resource);
+            }
+        }
+        public static void CreateYarnFile(string resourceName, bool onlyIfNotExist = false)
+        {
+            CreateResourceFile(resourceName, Path, resourceName, onlyIfNotExist);
+        }
     }
-
-    public static void Test(bool initial = true)
-    {
-      string str = "TestRoom";
-      string key1 = "TestConvo";
-      string key2 = "TestEncounter";
-      ((Component) (LoadedAssetsHandler.GetRoomPrefab((CardType) 300, LoadedAssetsHandler.GetBasicEncounter("PervertMessiah_Flavour").encounterRoom) as NPCRoomHandler)).transform.GetChild(0);
-      NPCRoomHandler npcRoomHandler = Data.Assets.LoadAsset<GameObject>("assets/TestGuy/TestRoom.prefab").AddComponent<NPCRoomHandler>();
-      npcRoomHandler._npcSelectable = (BaseRoomItem) ((Component) ((Component) npcRoomHandler).transform.GetChild(0)).gameObject.AddComponent<BasicRoomItem>();
-      npcRoomHandler._npcSelectable._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) npcRoomHandler._npcSelectable).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) npcRoomHandler._npcSelectable._renderers[0]).material = TestNPC.SpriteMat;
-      if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains<string>(PathUtils.encounterRoomsResPath + str))
-        LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + str, (BaseRoomHandler) npcRoomHandler);
-      else
-        LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + str] = (BaseRoomHandler) npcRoomHandler;
-      DialogueSO instance1 = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance1).name = key1;
-      instance1.dialog = TestNPC.Script;
-      instance1.startNode = "Salt.Test.Start";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key1))
-        LoadedAssetsHandler.LoadedDialogues.Add(key1, instance1);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key1] = instance1;
-      ConditionEncounterSO instance2 = ScriptableObject.CreateInstance<ConditionEncounterSO>();
-      instance2.questName = (QuestIDs) 774992;
-      instance2.questsCompletedNeeded = new QuestIDs[0];
-      ((Object) instance2).name = key2;
-      ((BasicEncounterSO) instance2)._dialogue = key1;
-      ((BasicEncounterSO) instance2).encounterRoom = str;
-      ((BasicEncounterSO) instance2).signType = (SignType) 774992;
-      ((BasicEncounterSO) instance2).npcEntityIDs = new EntityIDs[1]
-      {
-        (EntityIDs) 774992
-      };
-      if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains<string>(key2))
-        LoadedAssetsHandler.LoadedBasicEncounters.Add(key2, (BasicEncounterSO) instance2);
-      else
-        LoadedAssetsHandler.LoadedBasicEncounters[key2] = (BasicEncounterSO) instance2;
-      ZoneBGDataBaseSO zoneDb1 = LoadedAssetsHandler.GetZoneDB("ZoneDB_02") as ZoneBGDataBaseSO;
-      ZoneBGDataBaseSO zoneDb2 = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_02") as ZoneBGDataBaseSO;
-      CardTypeInfo cardTypeInfo = new CardTypeInfo();
-      cardTypeInfo._cardInfo = new CardInfo()
-      {
-        cardType = (CardType) 300,
-        pilePosition = (PilePositionType) 2
-      };
-      cardTypeInfo._minimumAmount = 0;
-      if (!((IEnumerable<string>) zoneDb1._FlavourPool).Contains<string>(key2))
-      {
-        zoneDb1._FlavourPool = new List<string>((IEnumerable<string>) zoneDb1._FlavourPool)
-        {
-          key2
-        }.ToArray();
-        zoneDb1._deckInfo._possibleCards = new List<CardTypeInfo>((IEnumerable<CardTypeInfo>) zoneDb1._deckInfo._possibleCards)
-        {
-          cardTypeInfo
-        }.ToArray();
-      }
-      if (!((IEnumerable<string>) zoneDb2._FlavourPool).Contains<string>(key2))
-      {
-        zoneDb2._FlavourPool = new List<string>((IEnumerable<string>) zoneDb2._FlavourPool)
-        {
-          key2
-        }.ToArray();
-        zoneDb2._deckInfo._possibleCards = new List<CardTypeInfo>((IEnumerable<CardTypeInfo>) zoneDb2._deckInfo._possibleCards)
-        {
-          cardTypeInfo
-        }.ToArray();
-      }
-      SpeakerData instance3 = ScriptableObject.CreateInstance<SpeakerData>();
-      instance3.speakerName = "TestGuy" + PathUtils.speakerDataSuffix;
-      ((Object) instance3).name = "TestGuy" + PathUtils.speakerDataSuffix;
-      instance3._defaultBundle = new SpeakerBundle()
-      {
-        dialogueSound = "event:/Characters/Player/Anton/CHR_PLR_Anton_Dx",
-        portrait = TestNPC.Front
-      };
-      instance3.portraitLooksLeft = true;
-      instance3.portraitLooksCenter = false;
-      if (!LoadedAssetsHandler.LoadedSpeakers.Keys.Contains<string>(instance3.speakerName))
-        LoadedAssetsHandler.LoadedSpeakers.Add(instance3.speakerName, instance3);
-      else
-        LoadedAssetsHandler.LoadedSpeakers[instance3.speakerName] = instance3;
-    }
-  }
 }

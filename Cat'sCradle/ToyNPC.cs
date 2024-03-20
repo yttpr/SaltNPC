@@ -1,290 +1,380 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Cat_sCradle.ToyNPC
-// Assembly: "Cat'sCradle", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 0655AEEE-5A60-4F93-BDB6-92433D76888B
-// Assembly location: C:\Users\windows\Downloads\Cat'sCradle\Cat'sCradle.dll
-
-using MonoMod.RuntimeDetour;
+﻿using MonoMod.RuntimeDetour;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Text;
 using Tools;
+using System.Reflection;
+using System.Linq;
 using UnityEngine;
+using static BrutalAPI.BrutalAPI;
 
-#nullable disable
 namespace Cat_sCradle
 {
-  public static class ToyNPC
-  {
-    public const string CluelessTalk = "event:/CluelessTalk";
-
-    public static Sprite World
+    //Embercoral
+    public static class ToyNPC
     {
-      get
-      {
-        return ResourceLoader.LoadSprite("clueless_sits.png", 32, new Vector2?(new Vector2(0.5f, 0.0f)));
-      }
-    }
-
-    public static Sprite WNPivot => ResourceLoader.LoadSprite("clueless_sits.png", 32);
-
-    public static Sprite Front => ResourceLoader.LoadSprite("clueless_dialogue.png", 32);
-
-    public static YarnProgram Script
-    {
-      get => Data.Assets.LoadAsset<YarnProgram>("assets/ToyGuy/toys.yarn");
-    }
-
-    public static void Doll()
-    {
-      string str = "TeaPartyToysRoom";
-      string key1 = "TeaPartyToysConvo";
-      string key2 = "TeaPartyToysEncounter";
-      MultiNPCRoomHandler multiNpcRoomHandler = Data.Assets.LoadAsset<GameObject>("assets/ToyGuy/ToyRoom.prefab").AddComponent<MultiNPCRoomHandler>();
-      multiNpcRoomHandler._npcSelectable = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(0)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler._npcSelectable._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler._npcSelectable).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler._npcSelectable._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkExtra = "TeaPartyNowakConvo";
-      multiNpcRoomHandler._extraSelectable = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(1)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler._extraSelectable._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler._extraSelectable).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler._extraSelectable._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.Artist = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(2)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.Artist._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.Artist).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.Artist._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkArtist = "TeaPartyArtistConvo";
-      multiNpcRoomHandler.Chilly = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(3)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.Chilly._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.Chilly).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.Chilly._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkChilly = "TeaPartyChillyConvo";
-      multiNpcRoomHandler.Ember = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(4)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.Ember._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.Ember).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.Ember._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkEmber = "TeaPartyEmberConvo";
-      multiNpcRoomHandler.Jub = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(5)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.Jub._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.Jub).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.Jub._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkJub = "TeaPartyJubConvo";
-      multiNpcRoomHandler.Peep = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(6)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.Peep._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.Peep).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.Peep._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkPeep = "TeaPartyPeepConvo";
-      multiNpcRoomHandler.PeepWithGun = (BaseRoomItem) ((Component) ((Component) multiNpcRoomHandler).transform.GetChild(7)).gameObject.AddComponent<BasicRoomItem>();
-      multiNpcRoomHandler.PeepWithGun._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) multiNpcRoomHandler.PeepWithGun).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) multiNpcRoomHandler.PeepWithGun._renderers[0]).material = TestNPC.SpriteMat;
-      multiNpcRoomHandler.TalkLeftover = "TeaPartyPeepConvo";
-      multiNpcRoomHandler.PeepFlipCheck = "Peep";
-      if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains<string>(PathUtils.encounterRoomsResPath + str))
-        LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + str, (BaseRoomHandler) multiNpcRoomHandler);
-      else
-        LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + str] = (BaseRoomHandler) multiNpcRoomHandler;
-      DialogueSO instance1 = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance1).name = key1;
-      instance1.dialog = ToyNPC.Script;
-      instance1.startNode = "Salt.Toys.Start";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key1))
-        LoadedAssetsHandler.LoadedDialogues.Add(key1, instance1);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key1] = instance1;
-      ToyNPC.ExtraDialogue();
-      ConditionEncounterSO instance2 = ScriptableObject.CreateInstance<ConditionEncounterSO>();
-      instance2.questName = (QuestIDs) 775023;
-      instance2.questsCompletedNeeded = new QuestIDs[0];
-      ((Object) instance2).name = key2;
-      ((BasicEncounterSO) instance2)._dialogue = key1;
-      ((BasicEncounterSO) instance2).encounterRoom = str;
-      ((BasicEncounterSO) instance2).signType = (SignType) 775023;
-      ((BasicEncounterSO) instance2).npcEntityIDs = new EntityIDs[1]
-      {
-        (EntityIDs) 775023
-      };
-      if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains<string>(key2))
-        LoadedAssetsHandler.LoadedBasicEncounters.Add(key2, (BasicEncounterSO) instance2);
-      else
-        LoadedAssetsHandler.LoadedBasicEncounters[key2] = (BasicEncounterSO) instance2;
-      ZoneBGDataBaseSO zoneDb1 = LoadedAssetsHandler.GetZoneDB("ZoneDB_01") as ZoneBGDataBaseSO;
-      ZoneBGDataBaseSO zoneDb2 = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_01") as ZoneBGDataBaseSO;
-      CardTypeInfo cardTypeInfo = new CardTypeInfo()
-      {
-        _cardInfo = new CardInfo()
+        public const string CluelessTalk = "event:/CluelessTalk";
+        public static Sprite World => ResourceLoader.LoadSprite("clueless_sits.png", 32, new Vector2(0.5f, 0));
+        public static Sprite WNPivot => ResourceLoader.LoadSprite("clueless_sits.png", 32);
+        public static Sprite Front => ResourceLoader.LoadSprite("clueless_dialogue.png", 32);
+        public static YarnProgram Script
         {
-          cardType = (CardType) 300,
-          pilePosition = (PilePositionType) 0
-        },
-        _percentage = 350,
-        _usePercentage = true
-      };
-      if (!((IEnumerable<string>) zoneDb1._FlavourPool).Contains<string>(key2))
-        zoneDb1._FlavourPool = new List<string>((IEnumerable<string>) zoneDb1._FlavourPool)
+            get
+            {
+                YarnProgram y = Data.Assets.LoadAsset<YarnProgram>("assets/ToyGuy/toys.yarn");
+                return y;
+            }
+        }
+        public static void Doll()
         {
-          key2
-        }.ToArray();
-      if (!((IEnumerable<string>) zoneDb2._FlavourPool).Contains<string>(key2))
-        zoneDb2._FlavourPool = new List<string>((IEnumerable<string>) zoneDb2._FlavourPool)
+            string roomName = "TeaPartyToysRoom";
+            string convoName = "TeaPartyToysConvo";
+            string encounterName = "TeaPartyToysEncounter";
+
+            MultiNPCRoomHandler room = Data.Assets.LoadAsset<GameObject>("assets/ToyGuy/ToyRoom.prefab").AddComponent<MultiNPCRoomHandler>();
+            room._npcSelectable = room.transform.GetChild(0).gameObject.AddComponent<BasicRoomItem>();
+            room._npcSelectable._renderers = new SpriteRenderer[]
+            {
+                room._npcSelectable.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room._npcSelectable._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkExtra = "TeaPartyNowakConvo";
+
+            room._extraSelectable = room.transform.GetChild(1).gameObject.AddComponent<BasicRoomItem>();
+            room._extraSelectable._renderers = new SpriteRenderer[]
+            {
+                room._extraSelectable.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room._extraSelectable._renderers[0].material = TestNPC.SpriteMat;
+
+            room.Artist = room.transform.GetChild(2).gameObject.AddComponent<BasicRoomItem>();
+            room.Artist._renderers = new SpriteRenderer[]
+            {
+                room.Artist.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.Artist._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkArtist = "TeaPartyArtistConvo";
+
+            room.Chilly = room.transform.GetChild(3).gameObject.AddComponent<BasicRoomItem>();
+            room.Chilly._renderers = new SpriteRenderer[]
+            {
+                room.Chilly.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.Chilly._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkChilly = "TeaPartyChillyConvo";
+
+            room.Ember = room.transform.GetChild(4).gameObject.AddComponent<BasicRoomItem>();
+            room.Ember._renderers = new SpriteRenderer[]
+            {
+                room.Ember.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.Ember._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkEmber = "TeaPartyEmberConvo";
+
+            room.Jub = room.transform.GetChild(5).gameObject.AddComponent<BasicRoomItem>();
+            room.Jub._renderers = new SpriteRenderer[]
+            {
+                room.Jub.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.Jub._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkJub = "TeaPartyJubConvo";
+
+            room.Peep = room.transform.GetChild(6).gameObject.AddComponent<BasicRoomItem>();
+            room.Peep._renderers = new SpriteRenderer[]
+            {
+                room.Peep.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.Peep._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkPeep = "TeaPartyPeepConvo";
+
+            room.PeepWithGun = room.transform.GetChild(7).gameObject.AddComponent<BasicRoomItem>();
+            room.PeepWithGun._renderers = new SpriteRenderer[]
+            {
+                room.PeepWithGun.transform.GetChild(0).GetComponent<SpriteRenderer>(),
+            };
+            room.PeepWithGun._renderers[0].material = TestNPC.SpriteMat;
+            room.TalkLeftover = "TeaPartyPeepConvo";
+
+            room.PeepFlipCheck = "Peep";
+
+            if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains(PathUtils.encounterRoomsResPath + roomName)) LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + roomName, room);
+            else LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + roomName] = room;
+
+
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Start";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+            ExtraDialogue();
+
+
+            ConditionEncounterSO ret = ScriptableObject.CreateInstance<ConditionEncounterSO>();
+            ret.questName = (QuestIDs)775023;
+            ret.questsCompletedNeeded = new QuestIDs[0];
+            ret.name = encounterName;
+            ret._dialogue = convoName;
+            ret.encounterRoom = roomName;
+            ret.signType = (SignType)775023;
+            ret.npcEntityIDs = new EntityIDs[] { (EntityIDs)775023 };
+            if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains(encounterName)) LoadedAssetsHandler.LoadedBasicEncounters.Add(encounterName, ret);
+            else LoadedAssetsHandler.LoadedBasicEncounters[encounterName] = ret;
+
+
+            ZoneBGDataBaseSO gardE = LoadedAssetsHandler.GetZoneDB("ZoneDB_01") as ZoneBGDataBaseSO;
+            ZoneBGDataBaseSO gardH = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_01") as ZoneBGDataBaseSO;
+
+            CardTypeInfo card = new CardTypeInfo();
+            card._cardInfo = new CardInfo() { cardType = CardType.Flavour, pilePosition = PilePositionType.Any };
+            card._percentage = 350;
+            card._usePercentage = true;
+
+
+            if (!gardE._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldEF = new List<string>(gardE._FlavourPool);
+                oldEF.Add(encounterName);
+                gardE._FlavourPool = oldEF.ToArray();
+
+                //List<CardTypeInfo> oldEC = new List<CardTypeInfo>(gardE._deckInfo._possibleCards);
+                //oldEC.Add(card);
+                //gardE._deckInfo._possibleCards = oldEC.ToArray();
+            }
+
+            if (!gardH._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldHF = new List<string>(gardH._FlavourPool);
+                oldHF.Add(encounterName);
+                gardH._FlavourPool = oldHF.ToArray();
+                //List<CardTypeInfo> oldHC = new List<CardTypeInfo>(gardH._deckInfo._possibleCards);
+                //oldHC.Add(card);
+                //gardH._deckInfo._possibleCards = oldHC.ToArray();
+            }
+
+
+            SpeakerData test = ScriptableObject.CreateInstance<SpeakerData>();
+            test.speakerName = "Clueless" + PathUtils.speakerDataSuffix;
+            test.name = "Clueless" + PathUtils.speakerDataSuffix;
+
+            SpeakerBundle testBund = new SpeakerBundle();
+            testBund.dialogueSound = CluelessTalk;
+            testBund.portrait = Front;
+            testBund.bundleTextColor = new Color32(0, 140, 255, 255);
+
+
+            test._defaultBundle = testBund;
+            test.portraitLooksLeft = true;
+            test.portraitLooksCenter = false;
+
+            if (!LoadedAssetsHandler.LoadedSpeakers.Keys.Contains(test.speakerName)) LoadedAssetsHandler.LoadedSpeakers.Add(test.speakerName, test);
+            else LoadedAssetsHandler.LoadedSpeakers[test.speakerName] = test;
+        }
+        public static void Add()
         {
-          key2
-        }.ToArray();
-      SpeakerData instance3 = ScriptableObject.CreateInstance<SpeakerData>();
-      instance3.speakerName = "Clueless" + PathUtils.speakerDataSuffix;
-      ((Object) instance3).name = "Clueless" + PathUtils.speakerDataSuffix;
-      instance3._defaultBundle = new SpeakerBundle()
-      {
-        dialogueSound = "event:/CluelessTalk",
-        portrait = ToyNPC.Front,
-        bundleTextColor = Color32.op_Implicit(new Color32((byte) 0, (byte) 140, byte.MaxValue, byte.MaxValue))
-      };
-      instance3.portraitLooksLeft = true;
-      instance3.portraitLooksCenter = false;
-      if (!LoadedAssetsHandler.LoadedSpeakers.Keys.Contains<string>(instance3.speakerName))
-        LoadedAssetsHandler.LoadedSpeakers.Add(instance3.speakerName, instance3);
-      else
-        LoadedAssetsHandler.LoadedSpeakers[instance3.speakerName] = instance3;
+            AddSignType((SignType)775023, WNPivot);
+            Setup();
+        }
+        public static void ExtraDialogue()
+        {
+            Nowak();
+            Artist();
+            Chilly();
+            Ember();
+            Jub();
+            Peep();
+        }
+        public static void Nowak()
+        {
+            string convoName = "TeaPartyNowakConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Nowak";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+        public static void Artist()
+        {
+            string convoName = "TeaPartyArtistConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.artist";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+        public static void Chilly()
+        {
+            string convoName = "TeaPartyChillyConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Chilly";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+        public static void Ember()
+        {
+            string convoName = "TeaPartyEmberConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Ember";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+        public static void Jub()
+        {
+            string convoName = "TeaPartyJubConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Jub";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+        public static void Peep()
+        {
+            string convoName = "TeaPartyPeepConvo";
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.Toys.Peep";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+        }
+
+        public static void ForceDialogue(object sender, object args)
+        {
+            DialogueAndEntityContent group = args as DialogueAndEntityContent;
+            DialogueDataReference dialogueDataReference = group.dialogueRef;
+            int npcID = dialogueDataReference.npcID;
+            TalkingEntityContentData talkingEntityData = group.entityContent;
+            string dialogueReference = ((talkingEntityData != null) ? talkingEntityData.dialogue : "");
+            bool flag = dialogueDataReference.songEvent != "";
+            BlueNPC.overManager._inDialogue = BlueNPC.overManager._dialogueHandler.TryStartConversation(dialogueReference, flag);
+            BlueNPC.overManager._dialogueIsFromRoomNPC = BlueNPC.overManager._inDialogue;
+            if (flag && BlueNPC.overManager._soundManager.TryPlayDialogueMusicTrack(dialogueDataReference.songEvent))
+            {
+                BlueNPC.overManager._soundManager.PauseOverworldMusic(pause: true);
+            }
+        }
+        public static void InitializeNotifications(Action<OverworldManagerBG> orig, OverworldManagerBG self)
+        {
+            orig(self);
+            NtfUtils.notifications.AddObserver(ForceDialogue, Vonnegut.ForceDialogNtf);
+        }
+        public static void Setup()
+        {
+            IDetour hook = new Hook(typeof(OverworldManagerBG).GetMethod(nameof(OverworldManagerBG.InitializeNotifications), ~BindingFlags.Default), typeof(ToyNPC).GetMethod(nameof(InitializeNotifications), ~BindingFlags.Default));
+        }
     }
 
-    public static void Add()
+    public class DialogueAndEntityContent
     {
-      BrutalAPI.BrutalAPI.AddSignType((SignType) 775023, ToyNPC.WNPivot);
-      ToyNPC.Setup();
+        public DialogueDataReference dialogueRef;
+        public TalkingEntityContentData entityContent;
+        public DialogueAndEntityContent(DialogueDataReference dialogueRef, TalkingEntityContentData entityContent)
+        {
+            this.dialogueRef = dialogueRef;
+            this.entityContent = entityContent;
+        }
     }
 
-    public static void ExtraDialogue()
+    public class MultiNPCRoomHandler : NPCRoomHandler
     {
-      ToyNPC.Nowak();
-      ToyNPC.Artist();
-      ToyNPC.Chilly();
-      ToyNPC.Ember();
-      ToyNPC.Jub();
-      ToyNPC.Peep();
-    }
+        public override BaseRoomItem[] RoomSelectables
+        {
+            get
+            {
+                if (_allSelectables == null)
+                {
+                    MoreGenerateAllSelectables();
+                }
 
-    public static void Nowak()
-    {
-      string key = "TeaPartyNowakConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.Nowak";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
-    }
+                return _allSelectables;
+            }
+        }
 
-    public static void Artist()
-    {
-      string key = "TeaPartyArtistConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.artist";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
-    }
+        public TalkingEntityContentData ContentExtra => new TalkingEntityContentData(TalkExtra);
+        public string TalkExtra;
+        public BaseRoomItem Artist;
+        public TalkingEntityContentData ContentArtist => new TalkingEntityContentData(TalkArtist);
+        public string TalkArtist;
+        public BaseRoomItem Chilly;
+        public TalkingEntityContentData ContentChilly => new TalkingEntityContentData(TalkChilly);
+        public string TalkChilly;
+        public BaseRoomItem Ember;
+        public TalkingEntityContentData ContentEmber => new TalkingEntityContentData(TalkEmber);
+        public string TalkEmber;
+        public BaseRoomItem Jub;
+        public TalkingEntityContentData ContentJub => new TalkingEntityContentData(TalkJub);
+        public string TalkJub;
+        public BaseRoomItem Peep;
+        public TalkingEntityContentData ContentPeep => new TalkingEntityContentData(TalkPeep);
+        public string TalkPeep;
+        public BaseRoomItem PeepWithGun;
+        public TalkingEntityContentData Leftover => new TalkingEntityContentData(TalkLeftover);
+        public string TalkLeftover;
 
-    public static void Chilly()
-    {
-      string key = "TeaPartyChillyConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.Chilly";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
-    }
+        public override void PopulateRoom(IGameCheckData gameData, IMinimalRunInfoData runData, IMinimalZoneInfoData zoneData, int dataID)
+        {
+            DialogueDataReference args = new DialogueDataReference(dataID, _dialogueMusic);
+            _npcSelectable.SetClickData(Utils.startDialogNtf, args);
+            _entityData = zoneData.GetTalkingEntityData(dataID);
+            DialogueDataReference negRef = new DialogueDataReference(-1, _dialogueMusic);
+            if (_extraSelectable != null)
+            {
+                _extraSelectable.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentExtra));
+            }
+            if (Artist != null)
+            {
+                Artist.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentArtist));
+            }
+            if (Chilly != null)
+            {
+                Chilly.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentChilly));
+            }
+            if (Ember != null)
+            {
+                Ember.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentEmber));
+            }
+            if (Jub != null)
+            {
+                Jub.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentJub));
+            }
+            if (Peep != null)
+            {
+                Peep.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, ContentPeep));
+            }
+            if (PeepWithGun != null)
+            {
+                PeepWithGun.SetClickData(Vonnegut.ForceDialogNtf, new DialogueAndEntityContent(negRef, Leftover));
+            }
+            if (SavePerRun.Check(PeepFlipCheck)) DoSwap();
+        }
 
-    public static void Ember()
-    {
-      string key = "TeaPartyEmberConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.Ember";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
-    }
+        public string PeepFlipCheck;
 
-    public static void Jub()
-    {
-      string key = "TeaPartyJubConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.Jub";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
-    }
+        public void DoSwap()
+        {
+            this.Peep.HideItem();
+            this.PeepWithGun.ShowItem();
+        }
 
-    public static void Peep()
-    {
-      string key = "TeaPartyPeepConvo";
-      DialogueSO instance = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance).name = key;
-      instance.dialog = ToyNPC.Script;
-      instance.startNode = "Salt.Toys.Peep";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key))
-        LoadedAssetsHandler.LoadedDialogues.Add(key, instance);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key] = instance;
+        public void MoreGenerateAllSelectables()
+        {
+            List<BaseRoomItem> items = new List<BaseRoomItem>();
+            items.Add(_npcSelectable);
+            if (_extraSelectable != null) items.Add(_extraSelectable);
+            if (Artist != null) items.Add(Artist);
+            if (Chilly != null) items.Add(Chilly);
+            if (Ember != null) items.Add(Ember);
+            if (Jub != null) items.Add(Jub);
+            if (Peep != null) items.Add(Peep);
+            if (PeepWithGun != null) items.Add(PeepWithGun);
+            _allSelectables = items.ToArray();
+        }
     }
-
-    public static void ForceDialogue(object sender, object args)
-    {
-      DialogueAndEntityContent andEntityContent = args as DialogueAndEntityContent;
-      DialogueDataReference dialogueRef = andEntityContent.dialogueRef;
-      int npcId = dialogueRef.npcID;
-      TalkingEntityContentData entityContent = andEntityContent.entityContent;
-      string dialogue = entityContent != null ? entityContent.dialogue : "";
-      bool flag = dialogueRef.songEvent != "";
-      BlueNPC.overManager._inDialogue = BlueNPC.overManager._dialogueHandler.TryStartConversation(dialogue, flag);
-      BlueNPC.overManager._dialogueIsFromRoomNPC = BlueNPC.overManager._inDialogue;
-      if (!flag || !BlueNPC.overManager._soundManager.TryPlayDialogueMusicTrack(dialogueRef.songEvent))
-        return;
-      BlueNPC.overManager._soundManager.PauseOverworldMusic(true);
-    }
-
-    public static void InitializeNotifications(
-      Action<OverworldManagerBG> orig,
-      OverworldManagerBG self)
-    {
-      orig(self);
-      NtfUtils.notifications.AddObserver(new Action<object, object>(ToyNPC.ForceDialogue), "ForceDialogeNotif");
-    }
-
-    public static void Setup()
-    {
-      IDetour idetour = (IDetour) new Hook((MethodBase) typeof (OverworldManagerBG).GetMethod("InitializeNotifications", ~BindingFlags.Default), typeof (ToyNPC).GetMethod("InitializeNotifications", ~BindingFlags.Default));
-    }
-  }
 }

@@ -1,160 +1,193 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Cat_sCradle.BitchesHouse
-// Assembly: "Cat'sCradle", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 0655AEEE-5A60-4F93-BDB6-92433D76888B
-// Assembly location: C:\Users\windows\Downloads\Cat'sCradle\Cat'sCradle.dll
-
-using MonoMod.RuntimeDetour;
+﻿using MonoMod.RuntimeDetour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Tools;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using Yarn.Unity;
+using static BrutalAPI.BrutalAPI;
+using UnityEngine.Diagnostics;
 
-#nullable disable
 namespace Cat_sCradle
 {
-  public static class BitchesHouse
-  {
-    public static Sprite World
+    //anzyll
+    public static class BitchesHouse
     {
-      get
-      {
-        return ResourceLoader.LoadSprite("bitches_house.png", 100, new Vector2?(new Vector2(0.5f, 0.0f)));
-      }
-    }
-
-    public static Sprite WNPivot => ResourceLoader.LoadSprite("bitches_house.png", 100);
-
-    public static Sprite Front => ResourceLoader.LoadSprite("bitches_house.png", 100);
-
-    public static YarnProgram Script
-    {
-      get => Data.Assets.LoadAsset<YarnProgram>("assets/BitchesHouse/bitcheshouse.yarn");
-    }
-
-    public static void bitcheshouse()
-    {
-      string str = "BitchesHouseRoom";
-      string key1 = "BitchesHouseConvo";
-      string key2 = nameof (BitchesHouse);
-      NPCRoomHandler npcRoomHandler = Data.Assets.LoadAsset<GameObject>("assets/BitchesHouse/BitchesHouse.prefab").AddComponent<NPCRoomHandler>();
-      npcRoomHandler._npcSelectable = (BaseRoomItem) ((Component) ((Component) npcRoomHandler).transform.GetChild(0)).gameObject.AddComponent<BasicRoomItem>();
-      npcRoomHandler._npcSelectable._renderers = new SpriteRenderer[1]
-      {
-        ((Component) ((Component) npcRoomHandler._npcSelectable).transform.GetChild(0)).GetComponent<SpriteRenderer>()
-      };
-      ((Renderer) npcRoomHandler._npcSelectable._renderers[0]).material = TestNPC.SpriteMat;
-      if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains<string>(PathUtils.encounterRoomsResPath + str))
-        LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + str, (BaseRoomHandler) npcRoomHandler);
-      else
-        LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + str] = (BaseRoomHandler) npcRoomHandler;
-      DialogueSO instance1 = ScriptableObject.CreateInstance<DialogueSO>();
-      ((Object) instance1).name = key1;
-      instance1.dialog = BitchesHouse.Script;
-      instance1.startNode = "Salt.BitchesHouse.Start";
-      if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains<string>(key1))
-        LoadedAssetsHandler.LoadedDialogues.Add(key1, instance1);
-      else
-        LoadedAssetsHandler.LoadedDialogues[key1] = instance1;
-      ConditionEncounterSO instance2 = ScriptableObject.CreateInstance<ConditionEncounterSO>();
-      instance2.questName = (QuestIDs) 775000;
-      ((Object) instance2).name = key2;
-      ((BasicEncounterSO) instance2)._dialogue = key1;
-      ((BasicEncounterSO) instance2).encounterRoom = str;
-      ((BasicEncounterSO) instance2).signType = (SignType) 775000;
-      ((BasicEncounterSO) instance2).npcEntityIDs = new EntityIDs[1]
-      {
-        (EntityIDs) 775000
-      };
-      instance2.questsCompletedNeeded = new QuestIDs[0];
-      if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains<string>(key2))
-        LoadedAssetsHandler.LoadedBasicEncounters.Add(key2, (BasicEncounterSO) instance2);
-      else
-        LoadedAssetsHandler.LoadedBasicEncounters[key2] = (BasicEncounterSO) instance2;
-      ZoneBGDataBaseSO zoneDb1 = LoadedAssetsHandler.GetZoneDB("ZoneDB_01") as ZoneBGDataBaseSO;
-      ZoneBGDataBaseSO zoneDb2 = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_01") as ZoneBGDataBaseSO;
-      CardTypeInfo cardTypeInfo = new CardTypeInfo()
-      {
-        _cardInfo = new CardInfo()
+        public static Sprite World => ResourceLoader.LoadSprite("bitches_house.png", 100, new Vector2(0.5f, 0));
+        public static Sprite WNPivot => ResourceLoader.LoadSprite("bitches_house.png", 100);
+        public static Sprite Front => ResourceLoader.LoadSprite("bitches_house.png", 100);
+        public static YarnProgram Script
         {
-          cardType = (CardType) 300,
-          pilePosition = (PilePositionType) 0
-        },
-        _percentage = 350,
-        _usePercentage = true
-      };
-      if (!((IEnumerable<string>) zoneDb2._FlavourPool).Contains<string>(key2))
-        zoneDb2._FlavourPool = new List<string>((IEnumerable<string>) zoneDb2._FlavourPool)
+            get
+            {
+                YarnProgram y = Data.Assets.LoadAsset<YarnProgram>("assets/BitchesHouse/bitcheshouse.yarn");
+                return y;
+            }
+        }
+        public static void bitcheshouse()
         {
-          key2
-        }.ToArray();
-      SpeakerData instance3 = ScriptableObject.CreateInstance<SpeakerData>();
-      instance3.speakerName = nameof (BitchesHouse) + PathUtils.speakerDataSuffix;
-      ((Object) instance3).name = nameof (BitchesHouse) + PathUtils.speakerDataSuffix;
-      instance3._defaultBundle = new SpeakerBundle()
-      {
-        dialogueSound = nameof (BitchesHouse),
-        portrait = BitchesHouse.Front,
-        bundleTextColor = Data.Speech
-      };
-      instance3.portraitLooksLeft = true;
-      instance3.portraitLooksCenter = false;
-    }
+            string roomName = "BitchesHouseRoom";
+            string convoName = "BitchesHouseConvo";
+            string encounterName = "BitchesHouse";
 
-    public static void Add()
-    {
-      BrutalAPI.BrutalAPI.AddSignType((SignType) 775000, BitchesHouse.WNPivot);
-      BitchesHouse.Setup();
-    }
 
-    public static bool DidCompleteQuest(
-      Func<InGameDataSO, QuestIDs, bool> orig,
-      InGameDataSO self,
-      QuestIDs questName)
-    {
-      if (questName == 775000)
-      {
-        Debug.Log((object) "bitches house");
-        return Random.Range(0, 100) < 96;
-      }
-      if (questName == 775001)
-        return Random.Range(0, 100) < 70;
-      if (questName == 775002)
-        return Random.Range(0, 100) < 60;
-      if (questName == 774992)
-        return Random.Range(0, 100) < 80;
-      if (questName == 775012 || questName == 774995)
-        return Random.Range(0, 100) < 50;
-      if (questName == 775022 || questName == 775023)
-        return Random.Range(0, 100) < 80;
-      if (questName == 775019)
-        return SaveGame.Check("GamerShore");
-      if (questName == 785019)
-        return SaveGame.Check("GamerOrpheum");
-      if (questName == 795019)
-        return SaveGame.Check("GamerGarden");
-      return questName != 705019 && orig(self, questName);
-    }
+            NPCRoomHandler room = Data.Assets.LoadAsset<GameObject>("assets/BitchesHouse/BitchesHouse.prefab").AddComponent<NPCRoomHandler>();
 
-    public static void Setup()
-    {
-      IDetour idetour = (IDetour) new Hook((MethodBase) typeof (InGameDataSO).GetMethod("DidCompleteQuest", ~BindingFlags.Default), typeof (BitchesHouse).GetMethod("DidCompleteQuest", ~BindingFlags.Default));
-    }
+            room._npcSelectable = room.transform.GetChild(0).gameObject.AddComponent<BasicRoomItem>();
+            room._npcSelectable._renderers = new SpriteRenderer[]
+            {
+                room._npcSelectable.transform.GetChild(0).GetComponent<SpriteRenderer>()
+            };
 
-    public static void Wreck(string[] info)
-    {
-      Utils.ForceCrash((ForcedCrashCategory) 2);
-      Application.Quit();
-    }
+            room._npcSelectable._renderers[0].material = TestNPC.SpriteMat;
 
-    public static void Setup(DialogueRunner dialogueRunner)
-    {
-      // ISSUE: method pointer
-      dialogueRunner.AddCommandHandler("CatsCradleEndIt", new DialogueRunner.CommandHandler((object) null, __methodptr(Wreck)));
+            if (!LoadedAssetsHandler.LoadedRoomPrefabs.Keys.Contains(PathUtils.encounterRoomsResPath + roomName)) LoadedAssetsHandler.LoadedRoomPrefabs.Add(PathUtils.encounterRoomsResPath + roomName, room);
+            else LoadedAssetsHandler.LoadedRoomPrefabs[PathUtils.encounterRoomsResPath + roomName] = room;
+
+
+            DialogueSO log = ScriptableObject.CreateInstance<DialogueSO>();
+            log.name = convoName;
+            log.dialog = Script;
+            log.startNode = "Salt.BitchesHouse.Start";
+            if (!LoadedAssetsHandler.LoadedDialogues.Keys.Contains(convoName)) LoadedAssetsHandler.LoadedDialogues.Add(convoName, log);
+            else LoadedAssetsHandler.LoadedDialogues[convoName] = log;
+
+
+            ConditionEncounterSO ret = ScriptableObject.CreateInstance<ConditionEncounterSO>();
+            ret.questName = (QuestIDs)775000;
+            ret.name = encounterName;
+            ret._dialogue = convoName;
+            ret.encounterRoom = roomName;
+            ret.signType = (SignType)775000;
+            ret.npcEntityIDs = new EntityIDs[] { (EntityIDs)775000 };
+            ret.questsCompletedNeeded = new QuestIDs[0];
+            if (!LoadedAssetsHandler.LoadedBasicEncounters.Keys.Contains(encounterName)) LoadedAssetsHandler.LoadedBasicEncounters.Add(encounterName, ret);
+            else LoadedAssetsHandler.LoadedBasicEncounters[encounterName] = ret;
+
+
+            ZoneBGDataBaseSO gardE = LoadedAssetsHandler.GetZoneDB("ZoneDB_01") as ZoneBGDataBaseSO;
+            ZoneBGDataBaseSO gardH = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_01") as ZoneBGDataBaseSO;
+
+            CardTypeInfo card = new CardTypeInfo();
+            card._cardInfo = new CardInfo() { cardType = CardType.Flavour, pilePosition = PilePositionType.Any };
+            card._percentage = 350;
+            card._usePercentage = true;
+
+
+            /*if (!gardE._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldEF = new List<string>(gardE._FlavourPool);
+                oldEF.Add(encounterName);
+                gardE._FlavourPool = oldEF.ToArray();
+
+                //List<CardTypeInfo> oldEC = new List<CardTypeInfo>(gardE._deckInfo._possibleCards);
+                //oldEC.Add(card);
+                //gardE._deckInfo._possibleCards = oldEC.ToArray();
+            }*/
+
+            if (!gardH._FlavourPool.Contains(encounterName))
+            {
+                List<string> oldHF = new List<string>(gardH._FlavourPool);
+                oldHF.Add(encounterName);
+                gardH._FlavourPool = oldHF.ToArray();
+                //List<CardTypeInfo> oldHC = new List<CardTypeInfo>(gardH._deckInfo._possibleCards);
+                //oldHC.Add(card);
+                //gardH._deckInfo._possibleCards = oldHC.ToArray();
+            }
+
+
+            SpeakerData test = ScriptableObject.CreateInstance<SpeakerData>();
+            test.speakerName = "BitchesHouse" + PathUtils.speakerDataSuffix;
+            test.name = "BitchesHouse" + PathUtils.speakerDataSuffix;
+
+            SpeakerBundle testBund = new SpeakerBundle();
+            testBund.dialogueSound = "BitchesHouse";
+            testBund.portrait = Front;
+            testBund.bundleTextColor = Data.Speech;
+
+
+            test._defaultBundle = testBund;
+            test.portraitLooksLeft = true;
+            test.portraitLooksCenter = false;
+
+            //if (!LoadedAssetsHandler.LoadedSpeakers.Keys.Contains(test.speakerName)) LoadedAssetsHandler.LoadedSpeakers.Add(test.speakerName, test);
+            //else LoadedAssetsHandler.LoadedSpeakers[test.speakerName] = test;
+
+        }
+        public static void Add()
+        {
+            AddSignType((SignType)775000, WNPivot);
+            Setup();
+        }
+
+        public static bool DidCompleteQuest(Func<InGameDataSO, QuestIDs, bool> orig, InGameDataSO self, QuestIDs questName)
+        {
+            if (questName == (QuestIDs)775000)
+            {
+                Debug.Log("bitches house");
+                return (UnityEngine.Random.Range(0, 100) < 96);
+            }
+            else if (questName == (QuestIDs)775001)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 70);
+            }
+            else if (questName == (QuestIDs)775002)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 60);
+            }
+            else if (questName == (QuestIDs)774992)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 80);
+            }
+            else if (questName == (QuestIDs)775012)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 50);
+            }
+            else if (questName == (QuestIDs)774995)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 50);
+            }
+            else if (questName == (QuestIDs)775022)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 80);
+            }
+            else if (questName == (QuestIDs)775023)
+            {
+                return (UnityEngine.Random.Range(0, 100) < 80);
+            }
+            else if (questName == (QuestIDs)775019)
+            {
+                return SaveGame.Check("GamerShore");
+            }
+            else if (questName == (QuestIDs)785019)
+            {
+                return SaveGame.Check("GamerOrpheum");
+            }
+            else if (questName == (QuestIDs)795019)
+            {
+                return SaveGame.Check("GamerGarden");
+            }
+            else if (questName == (QuestIDs)705019)
+            {
+                return false;
+            }
+            return orig(self, questName);
+        }
+        public static void Setup()
+        {
+            IDetour hook = new Hook(typeof(InGameDataSO).GetMethod(nameof(InGameDataSO.DidCompleteQuest), ~BindingFlags.Default), typeof(BitchesHouse).GetMethod(nameof(DidCompleteQuest), ~BindingFlags.Default));
+        }
+
+        public static void Wreck(string[] info)
+        {
+            UnityEngine.Diagnostics.Utils.ForceCrash(ForcedCrashCategory.Abort);
+            Application.Quit();
+        }
+        public static void Setup(DialogueRunner dialogueRunner)
+        {
+            dialogueRunner.AddCommandHandler("CatsCradleEndIt", Wreck);
+        }
     }
-  }
 }

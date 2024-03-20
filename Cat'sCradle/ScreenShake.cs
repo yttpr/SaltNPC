@@ -1,89 +1,76 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Cat_sCradle.ScreenShake
-// Assembly: "Cat'sCradle", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 0655AEEE-5A60-4F93-BDB6-92433D76888B
-// Assembly location: C:\Users\windows\Downloads\Cat'sCradle\Cat'sCradle.dll
-
-using MonoMod.RuntimeDetour;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Text;
 using UnityEngine;
+using System.Collections;
+using MonoMod.RuntimeDetour;
+using System.Reflection;
 
-#nullable disable
 namespace Cat_sCradle
 {
-  public static class ScreenShake
-  {
-    public static MainMenuController mainCont;
-    public static OverworldManagerBG overMan;
-
-    public static AnimationCurve curve()
+    public static class ScreenShake
     {
-      Keyframe keyframe1;
-      // ISSUE: explicit constructor call
-      ((Keyframe) ref keyframe1).\u002Ector(0.0f, 0.0f);
-      Keyframe keyframe2;
-      // ISSUE: explicit constructor call
-      ((Keyframe) ref keyframe2).\u002Ector(0.15f, 50f);
-      Keyframe keyframe3;
-      // ISSUE: explicit constructor call
-      ((Keyframe) ref keyframe3).\u002Ector(0.225f, 45f);
-      Keyframe keyframe4;
-      // ISSUE: explicit constructor call
-      ((Keyframe) ref keyframe4).\u002Ector(1f, 0.0f);
-      return new AnimationCurve(new Keyframe[4]
-      {
-        keyframe1,
-        keyframe2,
-        keyframe3,
-        keyframe4
-      });
-    }
+        public static MainMenuController mainCont;
+        public static OverworldManagerBG overMan;
+        
+        public static AnimationCurve curve()
+        {
+            Keyframe start = new Keyframe(0f, 0f);
+            Keyframe peak = new Keyframe(0.15f, 50f);
+            Keyframe cap = new Keyframe(0.225f, 45f);
+            Keyframe end = new Keyframe(1f, 0f);
+            Keyframe[] array = new Keyframe[] {start, peak, cap, end };
+            AnimationCurve ret = new AnimationCurve(array);
+            return ret;
+        }
+        
+        public static void Shake(float duration = 5f)
+        {
+            foreach (Camera cam in UnityEngine.Object.FindObjectsOfType<Camera>(includeInactive: true))
+            {
+                //Debug.Log(cam);
+            }
+            //Debug.Log("cam.main: " + Camera.main);
+           // Debug.Log("cam.curr: " + Camera.current);
+            
+            overMan.StartCoroutine(Shaking(duration));
+        }
 
-    public static void Shake(float duration = 5f)
-    {
-      foreach (Camera camera in Object.FindObjectsOfType<Camera>(true))
-        ;
-      ((MonoBehaviour) ScreenShake.overMan).StartCoroutine(ScreenShake.Shaking(duration));
-    }
+        public static IEnumerator Shaking(float duration)
+        {
+            Dictionary<Camera, Vector3> cams = new Dictionary<Camera, Vector3>();
+            foreach(Camera cam in UnityEngine.Object.FindObjectsOfType<Camera>())
+            {
+                cams.Add(cam, cam.transform.position);
+            }
+            //Debug.Log(1);
+            //Vector3 startpos = cam.transform.position;
+            //Debug.Log(2);
+            float elapsedTime = 0f;
+            AnimationCurve Curve = curve();
+            //Debug.Log(3);
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float strnegth = Curve.Evaluate(elapsedTime / duration);
+                foreach(Camera cam in cams.Keys)
+                    cam.transform.position = cams[cam] + UnityEngine.Random.insideUnitSphere;
+                yield return null;
+            }
+            foreach (Camera cam in cams.Keys)
+                cam.transform.position = cams[cam];
+        }
 
-    public static IEnumerator Shaking(float duration)
-    {
-      Dictionary<Camera, Vector3> cams = new Dictionary<Camera, Vector3>();
-      Camera[] cameraArray = Object.FindObjectsOfType<Camera>();
-      for (int index = 0; index < cameraArray.Length; ++index)
-      {
-        Camera cam = cameraArray[index];
-        cams.Add(cam, ((Component) cam).transform.position);
-        cam = (Camera) null;
-      }
-      cameraArray = (Camera[]) null;
-      float elapsedTime = 0.0f;
-      AnimationCurve Curve = ScreenShake.curve();
-      while ((double) elapsedTime < (double) duration)
-      {
-        elapsedTime += Time.deltaTime;
-        float strnegth = Curve.Evaluate(elapsedTime / duration);
-        foreach (Camera cam in cams.Keys)
-          ((Component) cam).transform.position = Vector3.op_Addition(cams[cam], Random.insideUnitSphere);
-        yield return (object) null;
-      }
-      foreach (Camera cam in cams.Keys)
-        ((Component) cam).transform.position = cams[cam];
-    }
 
-    public static void Setup()
-    {
-      IDetour idetour = (IDetour) new Hook((MethodBase) typeof (OverworldManagerBG).GetMethod("Awake", ~BindingFlags.Default), typeof (ScreenShake).GetMethod("Awake", ~BindingFlags.Default));
+        public static void Setup()
+        {
+            IDetour hook = new Hook(typeof(OverworldManagerBG).GetMethod(nameof(OverworldManagerBG.Awake), ~BindingFlags.Default), typeof(ScreenShake).GetMethod(nameof(Awake), ~BindingFlags.Default));
+        }
+        public static void Awake(Action<OverworldManagerBG> orig, OverworldManagerBG self)
+        {
+            orig(self);
+            overMan = self;
+            BlueNPC.overManager = self;
+        }
     }
-
-    public static void Awake(Action<OverworldManagerBG> orig, OverworldManagerBG self)
-    {
-      orig(self);
-      ScreenShake.overMan = self;
-      BlueNPC.overManager = self;
-    }
-  }
 }
