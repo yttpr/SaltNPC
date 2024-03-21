@@ -79,6 +79,21 @@
     <None Remove="pisshit\itemguy.png" />
     <None Remove="pisshit\MenuGuy_1.png" />
     <None Remove="PPPLACEHOLDER\OverworldPlaceholder.png" />
+    <None Remove="PPPLACEHOLDER\PlaceholderFront.png" />
+    <None Remove="purple\DopFace.png" />
+    <None Remove="purple\DopWorld.png" />
+    <None Remove="redsky\GardenGuy_overworld.png" />
+    <None Remove="redsky\GardenGuy_portrait.png" />
+    <None Remove="rgb\GamerDead.png" />
+    <None Remove="rgb\GamerFace.png" />
+    <None Remove="rgb\GamerLand.png" />
+    <None Remove="smile\smileHappy.png" />
+    <None Remove="smile\smileNorm.png" />
+    <None Remove="smile\smileWorld.png" />
+    <None Remove="trap\Chest.png" />
+    <None Remove="trap\Hidey.png" />
+    <None Remove="weedjak\miniweed.png" />
+    <None Remove="weedjak\smokeweedeveryday.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -156,6 +171,21 @@
     <EmbeddedResource Include="pisshit\itemguy.png" />
     <EmbeddedResource Include="pisshit\MenuGuy_1.png" />
     <EmbeddedResource Include="PPPLACEHOLDER\OverworldPlaceholder.png" />
+    <EmbeddedResource Include="PPPLACEHOLDER\PlaceholderFront.png" />
+    <EmbeddedResource Include="purple\DopFace.png" />
+    <EmbeddedResource Include="purple\DopWorld.png" />
+    <EmbeddedResource Include="redsky\GardenGuy_overworld.png" />
+    <EmbeddedResource Include="redsky\GardenGuy_portrait.png" />
+    <EmbeddedResource Include="rgb\GamerDead.png" />
+    <EmbeddedResource Include="rgb\GamerFace.png" />
+    <EmbeddedResource Include="rgb\GamerLand.png" />
+    <EmbeddedResource Include="smile\smileHappy.png" />
+    <EmbeddedResource Include="smile\smileNorm.png" />
+    <EmbeddedResource Include="smile\smileWorld.png" />
+    <EmbeddedResource Include="trap\Chest.png" />
+    <EmbeddedResource Include="trap\Hidey.png" />
+    <EmbeddedResource Include="weedjak\miniweed.png" />
+    <EmbeddedResource Include="weedjak\smokeweedeveryday.png" />
   </ItemGroup>
 
   <ItemGroup>
