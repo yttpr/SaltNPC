@@ -69,6 +69,8 @@
     <None Remove="MODDD.png" />
     <None Remove="music\Computer.png" />
     <None Remove="music\Off.png" />
+    <None Remove="music\SaltNPCShowcaseMusic.bank" />
+    <None Remove="music\SaltNPCShowcaseMusic\SaltNPCShowcaseMusic.strings.bank" />
     <None Remove="music\Screen.png" />
     <None Remove="music\Static.png" />
     <None Remove="noidea\clueless_dialogue.png" />
@@ -161,6 +163,8 @@
     <EmbeddedResource Include="MODDD.png" />
     <EmbeddedResource Include="music\Computer.png" />
     <EmbeddedResource Include="music\Off.png" />
+    <EmbeddedResource Include="music\SaltNPCShowcaseMusic.bank" />
+    <EmbeddedResource Include="music\SaltNPCShowcaseMusic\SaltNPCShowcaseMusic.strings.bank" />
     <EmbeddedResource Include="music\Screen.png" />
     <EmbeddedResource Include="music\Static.png" />
     <EmbeddedResource Include="noidea\clueless_dialogue.png" />
